@@ -8,6 +8,10 @@ gem "puma"
 # calendar example
 gem "icalendar"
 
+# feeds example
+gem "redis"
+gem "chatterbot"
+
 group :development do
   gem "foreman"
 end

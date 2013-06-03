@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+ENV["chatterbot_config"] = File.expand_path("../../.twitter.yml", __FILE__)
+
+require "redis"
+require "chatterbot/dsl"
+
+no_update
+
+redis = Redis.new
+
+loop do
+  search(["#GoT", "#gameofthrones"]) do |tweet|
+    redis.publish("message.bus", {
+      :id   => tweet[:id].to_s,
+      :text => tweet[:text]
+    }.to_json)
+
+    sleep 1
+  end
+end
